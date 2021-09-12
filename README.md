@@ -1,34 +1,27 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Nuber Eats Frontend
 
-## Getting Started
+- 14.0 Create React App
 
-First, run the development server:
+- 14.1 TailwindCSS part One
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+- 14.2 TailwindCSS part Two
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- 14.3 Apollo Setup
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+- 14.4 React Router Dom
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+  - Next 에서는 React Router Dom 을 안써서 다른 방법을 찾아야 함.
+  - 아마도 Dynamic Route 를 쓰거나
+  - HOC 형태로 검증 로직을 만들거나
+  - Apollo Local State 활용?
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- 15.0 Local Only Fields
+  - ENOSPC: no space left on device, write 로 고생함
+    - 용량이 없어서 그런 듯
+    - 찾아보니 npm tmp 에 공간이 없어서 그런 것 같은데
+    - 일단 노트북 드라이브에 공간 자체가 없기도 없었다.
+    - 파일 정리하니 일단 됨.
+    - 근데 npm tmp 는 슬쩍 찾아봤더니 안보임
+    - 또 비슷한 문제가 생기면 좀 골치아프긴 할 듯
+    - npm 자체를 날리고 다시 받으면 되려나
+    - 정리를 잘하자.
