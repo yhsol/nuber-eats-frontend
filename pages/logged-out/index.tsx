@@ -3,6 +3,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { isLoggedInVar } from "../../apollo/reactive-variables/auth";
 
+type InputType = { email: string; password: string };
+
 function LoggedOut() {
   const router = useRouter();
   const handleClick = () => {
@@ -16,7 +18,11 @@ function LoggedOut() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data: any) => console.log("data: ", data);
+
+  const onSubmit = (data: InputType) => {
+    console.log("data: ", data);
+  };
+
   console.log("erros: ", errors);
   return (
     <div>
@@ -26,25 +32,19 @@ function LoggedOut() {
           type="email"
           placeholder="email"
           {...register("email", {
-            required: true,
+            required: "email is required",
             validate: (email: string) => email.includes("@gmail.com"),
           })}
         />
         <input
           type="password"
           placeholder="password"
-          {...register("password", { required: true })}
+          {...register("password", {
+            required: "password is required",
+            validate: (password: string) =>
+              password.length < 5 || password.length > 14,
+          })}
         />
-
-        <div>
-          {errors.email?.type === "required" && (
-            <span>This field (email) is required</span>
-          )}
-          {errors.email?.type === "validate" && (
-            <span>This field (email) is not validate</span>
-          )}
-          {errors?.password && <span>This field (password) is required</span>}
-        </div>
         <button onClick={handleClick}>Click to login</button>
       </form>
     </div>
