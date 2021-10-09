@@ -5,6 +5,11 @@ import { isLoggedInVar } from "../../apollo/reactive-variables/auth";
 
 type InputType = { email: string; password: string };
 
+interface IForm {
+  email: string;
+  password: string;
+}
+
 function LoggedOut() {
   const router = useRouter();
   const handleClick = () => {
@@ -17,13 +22,13 @@ function LoggedOut() {
     watch,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<IForm>();
 
   const onSubmit = (data: InputType) => {
     console.log("data: ", data);
   };
 
-  console.log("erros: ", errors);
+  console.log("errors: ", errors);
   return (
     <div>
       <h1>Logged Out</h1>
@@ -36,6 +41,9 @@ function LoggedOut() {
             validate: (email: string) => email.includes("@gmail.com"),
           })}
         />
+        {errors.email?.message && (
+          <span className="font-bold text-red-600">{errors.email.message}</span>
+        )}
         <input
           type="password"
           placeholder="password"
