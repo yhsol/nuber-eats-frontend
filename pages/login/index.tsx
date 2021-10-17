@@ -24,7 +24,7 @@ const Login = () => {
     register: registerLoginInput,
     getValues: getValuesLoginInput,
     handleSubmit: handleSubmitLoginInput,
-    formState: { errors: errorsLoginInput, isValid: isValidLoginInput },
+    formState: { errors: errorsLoginInput },
   } = useForm<LoginInput>();
 
   const [loginMutation, loginMutationResult] = useMutation<
@@ -35,8 +35,11 @@ const Login = () => {
     onError,
   });
 
+  const isDisabeldSubmit =
+    Object.keys(errorsLoginInput).length > 0 || loginMutationResult.loading;
+
   const onSubmit = () => {
-    if (isValidLoginInput || loginMutationResult.loading) return;
+    if (isDisabeldSubmit) return;
 
     const { email, password } = getValuesLoginInput();
     loginMutation({ variables: { loginInput: { email, password } } });
@@ -83,7 +86,7 @@ const Login = () => {
             message="Password minLength is 10"
           />
 
-          <button className="button mt-3">
+          <button className="button mt-3" disabled={isDisabeldSubmit}>
             {loginMutationResult.loading ? "Loading..." : "Login"}
           </button>
           <FormError
