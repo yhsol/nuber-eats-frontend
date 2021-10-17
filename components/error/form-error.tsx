@@ -1,12 +1,12 @@
 import React from "react";
 
 type FormErrorT = {
-  show: boolean;
-  message: string;
+  show?: boolean;
+  message?: string;
 };
 
 const FormError: React.FC<FormErrorT> = ({ show, message }) => {
-  if (!show) return null;
+  if (!show || !message) return null;
 
   return (
     <div>

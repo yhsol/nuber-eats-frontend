@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export const LOGIN_MUTATION = gql`
-  mutation LoginMutation($email: String!, $password: String!) {
-    login(input: { email: $email, password: $password }) {
+  mutation LoginMutation($loginInput: LoginInput!) {
+    login(input: $loginInput) {
       ok
       token
       error
