@@ -30,5 +30,12 @@
 - 15.1 React Hook Form
 
 - 15.2 React Hook Form part Two
+
   - react-hook-form 편리하긴 한데 제공하는 기능에 비해 문서가 충실하지 않탈까.. 시간을 충분히 들여서 보지 않아서 그런가.. 좀 더 봐야할 듯하다.
   - 그래도 편리하다고 생각됨.
+
+- 15.3 Router and @types
+
+- 15.4 Form Design
+
+- 15.5 Form Login

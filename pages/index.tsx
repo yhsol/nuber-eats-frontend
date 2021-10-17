@@ -8,10 +8,26 @@ const Home: NextPage = () => {
   return (
     <>
       <div>Hello World!</div>
-      <Link href="/posts/first-post">
-        <a>this page!</a>
-      </Link>
-      {isLoggedIn ? <div>is logged in</div> : <div>is logged out</div>}
+      <div>
+        <Link href="/posts/first-post">
+          <a>first-post</a>
+        </Link>
+      </div>
+      <div>
+        <Link href="/login">
+          <a>login</a>
+        </Link>
+      </div>
+      <div>
+        <Link href="/logged-out">
+          <a>logged-out</a>
+        </Link>
+      </div>
+      <div>
+        <Link href="/create-account">
+          <a>create-account</a>
+        </Link>
+      </div>
 
       <button onClick={() => isLoggedInVar(!isLoggedIn)}>
         toggle log in or out
