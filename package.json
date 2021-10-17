@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "codegen": "apollo client:codegen graphql/__generated__ --target=typescript --outputFlat"
   },
   "dependencies": {
     "@apollo/client": "^3.4.10",

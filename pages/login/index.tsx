@@ -3,16 +3,11 @@ import gql from "graphql-tag";
 import React from "react";
 import { useForm } from "react-hook-form";
 import FormError from "../../components/error/form-error";
-
-const LOGIN_MUTATION = gql`
-  mutation LoginMutation($email: String!, $password: String!) {
-    login(input: { email: $email, password: $password }) {
-      ok
-      token
-      error
-    }
-  }
-`;
+import { LOGIN_MUTATION } from "../../graphql/mutation/login";
+import {
+  LoginMutation,
+  LoginMutationVariables,
+} from "../../graphql/__generated__/LoginMutation";
 
 type LoginFormT = {
   email: string;
@@ -27,11 +22,20 @@ const Login = () => {
     formState: { errors, isValid },
   } = useForm<LoginFormT>();
 
-  const [loginMutation, { loading, error, data }] = useMutation(LOGIN_MUTATION);
+  const [loginMutation, { loading, error, data }] = useMutation<
+    LoginMutation,
+    LoginMutationVariables
+  >(LOGIN_MUTATION);
 
   const onSubmit = () => {
     if (isValid) {
       // submit!
+      loginMutation({
+        variables: {
+          email: "test",
+          password: "test",
+        },
+      });
     }
     console.log(getValues());
   };

@@ -8,7 +8,11 @@ type FormErrorT = {
 const FormError: React.FC<FormErrorT> = ({ show, message }) => {
   if (!show) return null;
 
-  return <span className="font-medium text-red-500">{message}</span>;
+  return (
+    <div>
+      <span className="font-medium text-red-500">{message}</span>
+    </div>
+  );
 };
 
 export default FormError;
