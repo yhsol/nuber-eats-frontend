@@ -11,12 +11,12 @@ import {
 } from "../../graphql/__generated__/LoginMutation";
 
 const onCompleted = ({ login: { ok, error, token } }: LoginMutation) => {
-  if (ok) console.log("token: ", token);
-  if (error) console.error("error: ", error);
+  if (ok) console.log("onCompleted token: ", token);
+  if (error) console.error("onCompleted error: ", error);
 };
 
 const onError = (error: ApolloError) => {
-  console.error("error: ", error);
+  console.error("onError: ", error);
 };
 
 const Login = () => {
@@ -36,7 +36,7 @@ const Login = () => {
   });
 
   const onSubmit = () => {
-    if (!isValidLoginInput) return;
+    if (isValidLoginInput || loginMutationResult.loading) return;
 
     const { email, password } = getValuesLoginInput();
     loginMutation({ variables: { loginInput: { email, password } } });
@@ -82,11 +82,14 @@ const Login = () => {
             show={errorsLoginInput.password?.type === "minLength"}
             message="Password minLength is 10"
           />
+
+          <button className="button mt-3">
+            {loginMutationResult.loading ? "Loading..." : "Login"}
+          </button>
           <FormError
-            show={Boolean(loginMutationResult.error?.message)}
-            message={loginMutationResult.error?.message}
+            show={Boolean(loginMutationResult.data?.login.error)}
+            message={String(loginMutationResult.data?.login.error)}
           />
-          <button className="button mt-3">Login</button>
         </form>
       </div>
     </div>

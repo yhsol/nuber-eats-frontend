@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "npm run codegen && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "codegen": "apollo client:codegen graphql/__generated__ --target=typescript --outputFlat"
+    "codegen": "rimraf graphql/__generated__ && apollo client:codegen graphql/__generated__ --target=typescript --outputFlat"
   },
   "dependencies": {
     "@apollo/client": "^3.4.10",
@@ -16,7 +16,8 @@
     "next": "11.1.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-hook-form": "^7.15.4"
+    "react-hook-form": "^7.15.4",
+    "rimraf": "^3.0.2"
   },
   "devDependencies": {
     "@types/react": "17.0.19",

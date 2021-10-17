@@ -44,4 +44,9 @@
 
 - 15.7 Apollo Codegen
 
+  - Apollo Codegen 도 편하긴한데 확실히 graphql-code-generator 가 더 편한거 같긴 하다. generate 해주는게 더 상세하다.
+    apollo 에서 제공한다는게 Apollo Codegen 의 장점이긴한데, 좀 더 써봐야겠다.
+
 - 15.8 Login Mutation
+
+- 15.9 Login Mutation part Two
