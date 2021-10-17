@@ -1,9 +1,22 @@
+import { useMutation } from "@apollo/client";
+import gql from "graphql-tag";
 import React from "react";
 import { useForm } from "react-hook-form";
+import FormError from "../../components/error/form-error";
+
+const LOGIN_MUTATION = gql`
+  mutation LoginMutation($email: String!, $password: String!) {
+    login(input: { email: $email, password: $password }) {
+      ok
+      token
+      error
+    }
+  }
+`;
 
 type LoginFormT = {
-  email?: string;
-  password?: string;
+  email: string;
+  password: string;
 };
 
 const Login = () => {
@@ -13,6 +26,8 @@ const Login = () => {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<LoginFormT>();
+
+  const [loginMutation, { loading, error, data }] = useMutation(LOGIN_MUTATION);
 
   const onSubmit = () => {
     if (isValid) {
@@ -39,6 +54,10 @@ const Login = () => {
             placeholder="Email"
             className="mb-3 input"
           />
+          <FormError
+            show={errors.email?.type === "required"}
+            message="Email is Required"
+          />
           <input
             {...register("password", {
               required: true,
@@ -49,12 +68,14 @@ const Login = () => {
             placeholder="Password"
             className="input"
           />
-          {errors.password && (
-            <span className="font-medium text-red-500">
-              {errors.password.type === "minLength" &&
-                "password minLength is 10"}
-            </span>
-          )}
+          <FormError
+            show={errors?.password?.type === "required"}
+            message="Password is Required"
+          />
+          <FormError
+            show={errors?.password?.type === "minLength"}
+            message="Password minLength is 10"
+          />
           <button className="button mt-3">Login</button>
         </form>
       </div>
