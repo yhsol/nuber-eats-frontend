@@ -1,7 +1,7 @@
 import { ApolloError, useMutation } from "@apollo/client";
-import gql from "graphql-tag";
 import React from "react";
 import { useForm } from "react-hook-form";
+import Button from "../../components/button";
 import FormError from "../../components/error/form-error";
 import { LOGIN_MUTATION } from "../../graphql/mutation/login";
 import { LoginInput } from "../../graphql/__generated__/globalTypes";
@@ -9,6 +9,7 @@ import {
   LoginMutation,
   LoginMutationVariables,
 } from "../../graphql/__generated__/LoginMutation";
+import Link from "next/link";
 
 const onCompleted = ({ login: { ok, error, token } }: LoginMutation) => {
   if (ok) console.log("onCompleted token: ", token);
@@ -24,8 +25,10 @@ const Login = () => {
     register: registerLoginInput,
     getValues: getValuesLoginInput,
     handleSubmit: handleSubmitLoginInput,
-    formState: { errors: errorsLoginInput },
-  } = useForm<LoginInput>();
+    formState,
+  } = useForm<LoginInput>({
+    mode: "onChange",
+  });
 
   const [loginMutation, loginMutationResult] = useMutation<
     LoginMutation,
@@ -36,7 +39,7 @@ const Login = () => {
   });
 
   const isDisabeldSubmit =
-    Object.keys(errorsLoginInput).length > 0 || loginMutationResult.loading;
+    Object.keys(formState.errors).length > 0 || loginMutationResult.loading;
 
   const onSubmit = () => {
     if (isDisabeldSubmit) return;
@@ -64,7 +67,7 @@ const Login = () => {
             className="mb-3 input"
           />
           <FormError
-            show={errorsLoginInput.email?.type === "required"}
+            show={formState.errors.email?.type === "required"}
             message="Email is Required"
           />
           <input
@@ -78,22 +81,31 @@ const Login = () => {
             className="input"
           />
           <FormError
-            show={errorsLoginInput.password?.type === "required"}
+            show={formState.errors.password?.type === "required"}
             message="Password is Required"
           />
           <FormError
-            show={errorsLoginInput.password?.type === "minLength"}
+            show={formState.errors.password?.type === "minLength"}
             message="Password minLength is 10"
           />
 
-          <button className="button mt-3" disabled={isDisabeldSubmit}>
-            {loginMutationResult.loading ? "Loading..." : "Login"}
-          </button>
+          <Button
+            disabled={!formState.isValid}
+            loading={loginMutationResult.loading}
+            title="Login!"
+            onSubmit={() => console.log("here")}
+          />
           <FormError
             show={Boolean(loginMutationResult.data?.login.error)}
             message={String(loginMutationResult.data?.login.error)}
           />
         </form>
+        <div className="mt-3">
+          New to Nuber ?
+          <span className="text-lime-500 hover:underline">
+            <Link href="/create-account">Create Account</Link>
+          </span>
+        </div>
       </div>
     </div>
   );
