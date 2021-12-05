@@ -10,6 +10,7 @@ import {
   LoginMutationVariables,
 } from "../../graphql/__generated__/LoginMutation";
 import Link from "next/link";
+import Head from "next/head";
 
 const onCompleted = ({ login: { ok, error, token } }: LoginMutation) => {
   if (ok) console.log("onCompleted token: ", token);
@@ -50,6 +51,10 @@ const Login = () => {
 
   return (
     <div className="h-screen flex items-center justify-center bg-gray-800">
+      <Head>
+        <title>Login | Nuber Eats</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </Head>
       <div className="bg-white w-full max-w-lg py-10 rounded-lg text-center pt-10 pb-8">
         <h3 className="text-2xl text-gray-800">LOG IN</h3>
         <form
@@ -101,7 +106,7 @@ const Login = () => {
           />
         </form>
         <div className="mt-3">
-          New to Nuber ?
+          New to Nuber?{" "}
           <span className="text-lime-500 hover:underline">
             <Link href="/create-account">Create Account</Link>
           </span>
