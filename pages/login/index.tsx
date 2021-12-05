@@ -11,9 +11,22 @@ import {
 } from "../../graphql/__generated__/LoginMutation";
 import Link from "next/link";
 import Head from "next/head";
+import { EMAIL_REGEX } from "../../utils/regex/email";
+import { isLoggedInVar } from "../../apollo/reactive-variables/auth";
+import Router from "next/router";
 
+/**
+ *
+ * @description
+ * ok: isLoggedInVar to true, push to "/"
+ * @description
+ * error: console.error("onCompleted error: ", error)
+ */
 const onCompleted = ({ login: { ok, error, token } }: LoginMutation) => {
-  if (ok) console.log("onCompleted token: ", token);
+  if (ok) {
+    isLoggedInVar(true);
+    Router.push("/");
+  }
   if (error) console.error("onCompleted error: ", error);
 };
 
@@ -65,6 +78,7 @@ const Login = () => {
           <input
             {...registerLoginInput("email", {
               required: true,
+              pattern: EMAIL_REGEX,
             })}
             required
             type="email"
@@ -74,6 +88,10 @@ const Login = () => {
           <FormError
             show={formState.errors.email?.type === "required"}
             message="Email is Required"
+          />
+          <FormError
+            show={formState.errors.email?.type === "pattern"}
+            message="Email is not valid"
           />
           <input
             {...registerLoginInput("password", {
@@ -102,7 +120,7 @@ const Login = () => {
           />
           <FormError
             show={Boolean(loginMutationResult.data?.login.error)}
-            message={String(loginMutationResult.data?.login.error)}
+            message={loginMutationResult.data?.login.error || ""}
           />
         </form>
         <div className="mt-3">

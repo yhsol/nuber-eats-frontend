@@ -14,11 +14,21 @@ import {
   CreateAccountMutation,
   CreateAccountMutationVariables,
 } from "../../graphql/__generated__/CreateAccountMutation";
+import { EMAIL_REGEX } from "../../utils/regex/email";
+import Router from "next/router";
 
+/**
+ *
+ * @description
+ * ok: push to "/login"
+ * @description
+ * error: console.error("onCompleted error: ", error)
+ */
 const onCompleted = ({
   createAccount: { ok, error },
 }: CreateAccountMutation) => {
-  if (ok) console.log("onCompleted ok: ", ok);
+  // push to login page when CreateAccountMutation success
+  if (ok) Router.push("/login");
   if (error) console.error("onCompleted error: ", error);
 };
 
@@ -31,7 +41,6 @@ const CreateAccount = () => {
     register: registerCreateAccountInput,
     getValues: getValuesCreateAccountInput,
     handleSubmit: handleSubmitCreateAccountInput,
-    watch,
     formState,
   } = useForm<CreateAccountInput>({
     mode: "onChange",
@@ -50,6 +59,7 @@ const CreateAccount = () => {
 
   const isDisabeldSubmit =
     Object.keys(formState.errors).length > 0 ||
+    !formState.isValid ||
     createAccountMutationResult.loading;
 
   const onSubmit = () => {
@@ -60,7 +70,7 @@ const CreateAccount = () => {
       variables: { createAccountInput: { email, password, role } },
     });
   };
-  console.log("watch: ", watch());
+
   return (
     <div className="h-screen flex items-center justify-center bg-gray-800">
       <Head>
@@ -77,6 +87,7 @@ const CreateAccount = () => {
           <input
             {...registerCreateAccountInput("email", {
               required: true,
+              pattern: EMAIL_REGEX,
             })}
             required
             type="email"
@@ -86,6 +97,10 @@ const CreateAccount = () => {
           <FormError
             show={formState.errors.email?.type === "required"}
             message="Email is Required"
+          />
+          <FormError
+            show={formState.errors.email?.type === "pattern"}
+            message="Email is not valid"
           />
           <input
             {...registerCreateAccountInput("password", {
@@ -126,9 +141,9 @@ const CreateAccount = () => {
             show={Boolean(
               createAccountMutationResult.data?.createAccount.error
             )}
-            message={String(
-              createAccountMutationResult.data?.createAccount.error
-            )}
+            message={
+              createAccountMutationResult.data?.createAccount.error || ""
+            }
           />
         </form>
         <div className="mt-3">

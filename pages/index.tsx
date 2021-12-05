@@ -12,7 +12,7 @@ const Home: NextPage = () => {
         <title>Nuber Eats</title>
         <meta name="viewprot" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <div>Hello World!</div>
+      <div>{isLoggedIn ? "Logged In" : "Not Logged In"}</div>
       <div>
         <Link href="/posts/first-post">
           <a>first-post</a>
