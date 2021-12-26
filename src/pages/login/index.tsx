@@ -3,17 +3,21 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import Button from "../../components/button";
 import FormError from "../../components/error/form-error";
-import { LOGIN_MUTATION } from "../../graphql/mutation/login";
-import { LoginInput } from "../../graphql/__generated__/globalTypes";
+import { LOGIN_MUTATION } from "../../network/graphql/mutation/login";
+import { LoginInput } from "../../network/graphql/__generated__/globalTypes";
 import {
   LoginMutation,
   LoginMutationVariables,
-} from "../../graphql/__generated__/LoginMutation";
+} from "../../network/graphql/__generated__/LoginMutation";
 import Link from "next/link";
 import Head from "next/head";
 import { EMAIL_REGEX } from "../../utils/regex/email";
-import { isLoggedInVar } from "../../apollo/reactive-variables/auth";
+import {
+  authToken,
+  isLoggedInVar,
+} from "../../network/apollo/reactive-variables/auth";
 import Router from "next/router";
+import { setToken } from "../../utils/auth/auth.funcs";
 
 /**
  *
@@ -23,7 +27,9 @@ import Router from "next/router";
  * error: console.error("onCompleted error: ", error)
  */
 const onCompleted = ({ login: { ok, error, token } }: LoginMutation) => {
-  if (ok) {
+  if (ok && token) {
+    setToken(token);
+    authToken(token);
     isLoggedInVar(true);
     Router.push("/");
   }

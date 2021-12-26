@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "codegen": "rimraf graphql/__generated__ && apollo client:codegen graphql/__generated__ --target=typescript --outputFlat"
+    "codegen": "rimraf src/network/graphql/__generated__ && apollo client:codegen src/network/graphql/__generated__ --target=typescript --outputFlat"
   },
   "dependencies": {
     "@apollo/client": "^3.4.10",

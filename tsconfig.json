@@ -14,6 +14,6 @@
     "isolatedModules": true,
     "jsx": "preserve"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "graphql/apolloTypes"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/network/graphql/apolloTypes"],
   "exclude": ["node_modules"]
 }

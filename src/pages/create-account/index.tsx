@@ -6,15 +6,15 @@ import FormError from "../../components/error/form-error";
 import {
   CreateAccountInput,
   UserRole,
-} from "../../graphql/__generated__/globalTypes";
+} from "../../network/graphql/__generated__/globalTypes";
 import Link from "next/link";
 import Head from "next/head";
-import { CREATE_ACCOUNT_MUTATION } from "../../graphql/mutation/createAccount";
+import { CREATE_ACCOUNT_MUTATION } from "../../network/graphql/mutation/createAccount";
 import {
   CreateAccountMutation,
   CreateAccountMutationVariables,
-} from "../../graphql/__generated__/CreateAccountMutation";
-import { EMAIL_REGEX } from "../../utils/regex/email";
+} from "../../network/graphql/__generated__/CreateAccountMutation";
+import { EMAIL_REGEX } from "../../funcs/regex/email";
 import Router from "next/router";
 
 /**
@@ -28,7 +28,10 @@ const onCompleted = ({
   createAccount: { ok, error },
 }: CreateAccountMutation) => {
   // push to login page when CreateAccountMutation success
-  if (ok) Router.push("/login");
+  if (ok) {
+    alert("Account Created! Log in now!");
+    Router.push("/login");
+  }
   if (error) console.error("onCompleted error: ", error);
 };
 
